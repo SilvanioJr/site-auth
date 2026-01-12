@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração de Escalas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="dashboard-body admin-escalas-page">
+
+<div class="dashboard-container">
+
+    <div class="dashboard-header-title">
+        <h2>Administração de Escalas</h2>
+        <!-- <p style="opacity: 0.7; font-size: 13px;">
+            Criar e gerenciar escalas
+        </p> -->
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="card admin-link-card">
+        <a href="/admin/visao-escalas" class="admin-link">
+            📋 Ver visão geral das escalas
+        </a>
+    </div>
+
+
+    <div class="card">
+
+        <h3>Cadastrar nova escala</h3>
+
+        <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <input type="hidden" name="acao" value="criar_escala">
+
+            <label>Data</label>
+            <input type="date" name="data" required>
+
+            <label>Evento</label>
+            <input type="text" name="evento" placeholder="Nome do evento" required>
+
+            <label>Horário</label>
+            <input type="time" name="horario">
+
+            <label>Tipo de escala</label>
+            <select name="tipo" required>
+                <option value="">Selecione</option>
+                <option value="CONJOAAD">CONJOAAD</option>
+                <option value="CONAD">CONAD</option>
+                <option value="REGIAO">REGIÃO</option>
+            </select>
+
+            <button type="submit">Salvar escala</button>
+
+        </form>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Atribuir usuário à escala</h3>
+
+        <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+
+            <input type="hidden" name="acao" value="atribuir_usuario">
+
+            <label>Escala</label>
+            <select name="escala_id" required>
+                <option value="">Selecione</option>
+                {% for e in escalas %}
+                    <option value="{{ e.Id }}">
+                        {{ e.Data.strftime('%d/%m/%Y') }} — {{ e.Evento }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label>Usuário</label>
+            <select name="user_id" required>
+                <option value="">Selecione</option>
+                {% for u in usuarios %}
+                    <option value="{{ u.Id }}">{{ u.Username }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Função</label>
+            <input type="text" name="funcao" placeholder="Ex: Live, Reels, Foto" required>
+
+            <button type="submit">Atribuir</button>
+
+        </form>
+
+    </div>
+
+
+    <a href="/dashboard" class="back-link">← Voltar</a>
+
+</div>
+
+<script nonce="{{ g.csp_nonce }}">
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".flash").forEach(flash => {
+        // Remove do DOM APÓS a animação CSS terminar (4s)
+        setTimeout(() => {
+            flash.remove();
+        }, 1000);
+    });
+});
+</script>
+
+
+
+</body>
+</html>

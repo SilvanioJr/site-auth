@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-container">
+
+    <!-- TOPO -->
+   <div class="dashboard-header">
+
+        <a href="{{ url_for('perfil') }}" class="user-profile-link">
+
+            {% if current_user.photo_path %}
+                <img src="{{ current_user.photo_path }}"
+                    alt="Foto do usuário"
+                    class="avatar">
+            {% else %}
+                <div class="avatar avatar-placeholder">
+                    👤
+                </div>
+            {% endif %}
+
+            <div class="user-info">
+                <span class="welcome">Olá,</span>
+                <strong class="username">{{ current_user.username }}</strong>
+            </div>
+
+        </a>
+
+    </div>
+
+    <!-- Botão Calendar -->
+    <div class="calendar-nav">
+        <a href="/dashboard?mes={{ mes_anterior }}&ano={{ ano_anterior }}">◀</a>
+        <span>{{ nome_mes }} / {{ ano }}</span>
+        <a href="/dashboard?mes={{ mes_proximo }}&ano={{ ano_proximo }}">▶</a>
+    </div>
+
+    <!-- CALENDÁRIO -->
+   <div class="calendar-wrapper">
+
+        <div class="calendar">
+            {% for dia in dias %}
+                {% if dia in escalas %}
+                    <span
+                        class="day has-scale"
+                        data-day="{{ dia }}"
+                        data-scales='{{ escalas[dia] | tojson }}'
+                    >
+                        {{ dia }}
+                    </span>
+                {% else %}
+                    <span class="day">{{ dia }}</span>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div id="tooltip" class="tooltip hidden"></div>
+
+    </div>
+
+    <!-- MINHAS ESCALAS -->
+    <a href="/minhas-escalas?mes={{ mes }}&ano={{ ano }}" class="card highlight">
+        <h3>Minhas Escalas</h3>
+        <p>Veja onde você está escalado</p>
+    </a>
+
+    {% if current_user.is_admin %}
+    <a href="/admin/escalas" class="card highlight">
+        <h3>Administração</h3>
+        <p>Criar e gerenciar escalas</p>
+    </a>
+    {% endif %}
+
+    {% if current_user.is_super_admin %}
+        <a href="{{ url_for('admin_usuarios') }}" class="card admin-link-card">
+            <span>👤 Gerenciar usuários</span>
+        </a>
+    {% endif %}
+
+    <!-- EVENTOS -->
+    <!-- <div class="card">
+        <h3>Próximos Eventos</h3>
+
+        <div class="event">
+            <strong>Culto Jovem</strong>
+            <span>Mídia • 12/01</span>
+        </div>
+
+        <div class="event">
+            <strong>Ensaio Geral</strong>
+            <span>Transmissão • 15/01</span>
+        </div>
+    </div> -->
+
+    <a href="/logout" class="logout">Sair</a>
+
+</div>
+
+<script nonce="{{ g.csp_nonce }}">
+const tooltip = document.getElementById("tooltip");
+
+document.querySelectorAll(".day.has-scale").forEach(day => {
+    const scales = JSON.parse(day.dataset.scales);
+
+    // Montar bolinha segmentada
+    const cores = scales.map(s => {
+        if (s.tipo === "CONJOAAD") return "#2f7dd1";
+        if (s.tipo === "CONAD") return "#e0b04a";
+        if (s.tipo === "REGIAO") return "#4caf50";
+        return "#999";
+    });
+
+    const step = 360 / cores.length;
+    let gradient = "conic-gradient(";
+    cores.forEach((cor, i) => {
+        gradient += `${cor} ${i * step}deg ${(i + 1) * step}deg, `;
+    });
+    gradient = gradient.slice(0, -2) + ")";
+
+    day.style.setProperty("--cores", gradient);
+
+    // Clique → mostrar tooltip
+    day.addEventListener("click", () => {
+        tooltip.innerHTML = `
+            <h4>Escalas do dia ${day.textContent}</h4>
+            ${scales.map(s => `
+                <div class="item">
+                    <strong>${s.evento}</strong><br>
+                    <span class="tipo">${s.tipo} • ${s.horario}</span>
+                </div>
+            `).join("")}
+        `;
+        tooltip.classList.remove("hidden");
+    });
+});
+
+// Fechar tooltip ao clicar fora
+document.addEventListener("click", (e) => {
+    if (!e.target.closest(".calendar")) {
+        tooltip.classList.add("hidden");
+    }
+});
+
+</script>
+
+
+</body>
+</html>

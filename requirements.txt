@@ -1,0 +1,7 @@
+Flask
+Flask-Login
+Flask-WTF
+Flask-Limiter
+psycopg2-binary
+Pillow
+gunicorn

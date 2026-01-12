@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Escalas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='minhas-escalas.css') }}">
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-container">
+
+    <!-- Cabeçalho -->
+    <div class="minhas-escalas-header">
+        <h2>Minhas Escalas — {{ nome_mes }}</h2>
+    </div>
+
+    <!-- Tabela -->
+    <div class="card">
+
+        <table class="escala-table minhas-escalas-table">
+            <thead>
+                <tr>
+                    <th>Dia</th>
+                    <th>Função</th>
+                    <th>Horário</th>
+                    <th>Evento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in escalas %}
+                <tr>
+                    <td>{{ e.Dia }}</td>
+                    <td>{{ e.Funcao }}</td>
+                    <td>{{ e.Horario }}</td>
+                    <td class="evento-col">{{ e.Evento }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- Voltar -->
+    <a href="/dashboard" class="back-link">← Voltar</a>
+
+</div>
+
+</body>
+</html>

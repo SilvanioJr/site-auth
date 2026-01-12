@@ -1,0 +1,699 @@
+/* =========================
+   RESET
+========================= */
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================
+   BODY (APENAS FUNDO)
+========================= */
+body {
+    margin: 0;
+    background: radial-gradient(
+        circle at top left,
+        #0f2a44,
+        #020b13 60%,
+        #000000
+    );
+    color: #ffffff;
+}
+
+
+/* body {
+    margin: 0;
+    min-height: 80vh;
+    background: radial-gradient(
+        circle at top left,
+        #0f2a44,
+        #020b13 60%,
+        #000000
+    );
+    color: #ffffff;
+
+    /* 🔹 Base mobile 
+    font-size: 14px;
+} */
+
+
+/* =========================
+   LOGIN
+========================= */
+.login-container {
+    width: min(94%, 700px);               /* ⬅️ cresce mais no desktop */
+    /*margin: clamp(60px, 18vh, 200px) auto;   ⬅️ respira melhor em telas grandes */
+    margin: clamp(24px, 6vh, 120px) auto;
+    background: linear-gradient(180deg, #1c1f23, #0e1013);
+    border-radius: 16px;                  /* ⬅️ levemente mais elegante */
+    padding: clamp(26px, 5vw, 40px);      /* ⬅️ conteúdo mais confortável */
+    box-shadow: 0 24px 50px rgba(0,0,0,0.65);
+    text-align: center;
+}
+
+
+.logos {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.logos img {
+    height: clamp(40px, 5vw, 48px);
+}
+
+h1 {
+    font-size: clamp(20px, 2vw, 22px);
+    margin: 10px 0 6px;
+}
+
+h1 span {
+    color: #2f7dd1;
+}
+
+.subtitle {
+    font-size: clamp(13px, 1.3vw, 14px);
+    color: #b5b5b5;
+    margin-bottom: 24px;
+}
+
+/* Inputs */
+label {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    margin-bottom: 4px;
+    color: #cccccc;
+}
+
+input, select {
+    width: 100%;
+    padding: 11px;
+    border-radius: 8px;
+    border: 1px solid #2b2f35;
+    background: #15181c;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #2f7dd1;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #245c9c, #2f7dd1);
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+/* .dashboard-body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+} */
+
+/* .dashboard-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
+.dashboard-body {
+    min-height: 86vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/* .dashboard-container {
+    width: 100%;
+    max-width: clamp(420px, 75vw, 1920px);
+    padding: clamp(20px, 3vw, 40px);
+} */
+
+/* .dashboard-container {
+    width: 100%;
+    max-width: clamp(420px, 75vw, 1280px);
+    padding: clamp(16px, 3vw, 32px);
+    flex: 1; 
+} */
+
+.dashboard-container {
+    flex: 1; /* 🔥 ESSENCIAL */
+    width: 100%;
+    max-width: clamp(420px, 75vw, 1000px);
+    padding: clamp(16px, 3vw, 32px);
+    margin: 0 auto;
+}
+
+
+
+
+/* Header */
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: clamp(20px, 3vw, 32px);
+}
+
+
+.avatar {
+    width: clamp(44px, 5vw, 52px);
+    height: clamp(44px, 5vw, 52px);
+    border-radius: 50%;
+    object-fit: cover;
+    background: #1c1f23;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+}
+
+.user-info .welcome {
+    font-size: 13px;
+    color: #b5b5b5;
+}
+
+.user-info .username {
+    font-size: clamp(15px, 1.2vw, 17px);
+}
+
+/* Cards */
+.card {
+    background: linear-gradient(180deg, #1c1f23, #0e1013);
+    border-radius: 18px;
+    padding: clamp(16px, 3vw, 24px);
+    margin-bottom: 16px;
+}
+
+.card h3 {
+    font-size: clamp(15px, 1.2vw, 17px);
+    margin-bottom: 10px;
+}
+
+.highlight {
+    border-left: 4px solid #2f7dd1;
+}
+
+/* =========================
+   CALENDÁRIO
+========================= */
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(6px, 1vw, 10px);
+}
+
+.day {
+    background: #15181c;
+    padding: clamp(10px, 1.5vw, 14px) 0;
+    border-radius: 8px;
+    text-align: center;
+    font-size: clamp(13px, 1.1vw, 15px);
+    cursor: pointer;
+}
+
+.day.has-scale {
+    background: var(--cores);
+    font-weight: bold;
+}
+
+/* Tooltip */
+.calendar-wrapper {
+    position: relative;
+    margin-bottom: 32px;
+}
+
+.tooltip {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 12px;
+    background: #1c1f23;
+    padding: 14px;
+    border-radius: 12px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.tooltip.hidden {
+    display: none;
+}
+
+/* =========================
+   TABELAS
+========================= */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.escala-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: clamp(13px, 1vw, 15px);
+}
+
+.escala-table th,
+.escala-table td {
+    padding: clamp(10px, 1.5vw, 16px);
+    border-bottom: 1px solid #2b2f35;
+    text-align: left;
+}
+
+.escala-table th {
+    color: #9fb3c8;
+}
+
+/* =========================
+   PERFIL
+========================= */
+.perfil-body {
+    min-height: 100vh;
+}
+
+.perfil-container {
+    width: min(92%, 640px);
+    margin: clamp(40px, 10vh, 100px) auto;
+    padding: clamp(28px, 4vw, 48px);
+    background: rgba(0,0,0,0.6);
+    border-radius: 18px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.45);
+    text-align: center;
+}
+
+.perfil-container h2 {
+    font-size: clamp(1.6rem, 2vw, 2.1rem);
+    margin-bottom: 24px;
+}
+
+.perfil-container label {
+    font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+    margin-bottom: 10px;
+}
+
+.perfil-container input[type="file"] {
+    padding: clamp(14px, 2vw, 18px);
+    font-size: clamp(0.95rem, 1vw, 1.05rem);
+    margin-bottom: 28px;
+}
+
+.perfil-container button {
+    padding: clamp(14px, 2vw, 16px);
+    font-size: clamp(0.95rem, 1vw, 1.05rem);
+}
+
+.perfil-container .btn-voltar {
+    display: inline-block;
+    margin-top: 28px;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    color: #9bbcff;
+    text-decoration: none;
+}
+
+/* =========================
+   FLASH
+========================= */
+.login-alert {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.login-alert.error {
+    background: rgba(255, 80, 80, 0.15);
+    color: #ff6b6b;
+    border: 1px solid rgba(255, 80, 80, 0.3);
+}
+
+
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 6px 4px;
+}
+
+.calendar-nav span {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.calendar-nav a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #b5b5b5;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.calendar-nav a:hover {
+    background: #1c1f23;
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+   
+}
+
+
+.user-profile-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.avatar-placeholder {
+    font-size: 22px;
+}
+
+.user-info .welcome {
+    font-size: 13px;
+    color: #b5b5b5;
+}
+
+.user-info .username {
+    display: block;
+    font-size: 16px;
+}
+
+
+.card {
+    background: linear-gradient(180deg, #1c1f23, #0e1013);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+a.card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+a.card:hover {
+    transform: translateY(-2px);
+    transition: 0.2s ease;
+}
+
+.highlight {
+    border-left: 4px solid #2f7dd1;
+}
+
+.logout {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #b5b5b5;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.minhas-escalas-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.back-link {
+    display: block;
+    margin: 16px auto 0;
+    text-align: center;
+    color: #b5b5b5;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.admin-link-card {
+    text-align: center;
+}
+
+.admin-link {
+    display: inline-block;
+    padding: 14px 30px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2b6cb0, #1e3a5f);
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.admin-link:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* =========================
+   DESKTOP — TIPOGRAFIA GRANDE (DIFERENÇA REAL)
+========================= */
+@media (min-width: 1024px) {
+
+    /* 🔥 Base global maior */
+    body {
+        font-size: 18px; /* antes 16px → agora bem maior */
+    }
+
+    /* Títulos */
+    h1 {
+        font-size: 1.9rem;
+    }
+
+    h2 {
+        font-size: 2.2rem;
+    }
+
+    h3 {
+        font-size: 1.6rem;
+    }
+
+    /* Textos gerais */
+    .subtitle {
+        font-size: 1.15rem;
+    }
+
+    label {
+        font-size: 1.05rem;
+    }
+
+    .user-info .welcome {
+        font-size: 1rem;
+    }
+
+    .user-info .username {
+        font-size: 1.35rem;
+    }
+
+    /* Calendário */
+    .calendar-nav span {
+        font-size: 1.25rem;
+    }
+
+    .day {
+        font-size: 1.15rem;
+    }
+
+    /* Cards */
+    .card h3 {
+        font-size: 1.5rem;
+    }
+
+    .card p,
+    .card span {
+        font-size: 1.1rem;
+    }
+
+    /* Tabelas */
+    .escala-table {
+        font-size: 1.1rem;
+    }
+
+    .escala-table th {
+        font-size: 1.05rem;
+    }
+
+    /* Botões */
+    button {
+        font-size: 1.15rem;
+        padding: 16px;
+    }
+
+    /* Links */
+    .logout,
+    .back-link,
+    .btn-voltar {
+        font-size: 1.05rem;
+    }
+}
+
+
+@media (min-width: 1280px) {
+
+    input,
+    select {
+        font-size: 1.0rem;
+    }
+
+}
+
+.card.senha {
+    text-align: center;
+    margin-top: 32px;
+    align-items: center;      /* centraliza vertical */
+    justify-content: center;  /* centraliza horizontal */
+    min-height: 80px;         /* dá presença visual */
+    padding: 25px;
+}
+
+.card.senha h3 {
+    margin: 0;                /* remove margens padrão */
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.site-footer {
+    width: 100%;
+    margin-top: 40px;
+    padding: 16px 12px;
+    text-align: center;
+    opacity: 0.65;
+}
+
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+    color: #b5b5b5;
+}
+
+.footer-content strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    font-size: 16px;
+}
+
+.footer-links a {
+    color: #b5b5b5;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .footer-content {
+        font-size: 13px;
+    }
+}
+
+.linkedin-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================
+   LOGIN — SEM SCROLL
+========================= */
+
+.login-page {
+    min-height: 86vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px; /* evita colar nas bordas no mobile */
+}
+
+.login-container {
+    width: min(92%, 520px);
+    background: linear-gradient(180deg, #1c1f23, #0e1013);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    text-align: center;
+}
+
+@keyframes flashAutoHide {
+    0% {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    70% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-8px);
+        visibility: hidden;
+    }
+}
+
+
+.flash {
+    position: relative;
+    text-align: center;
+    padding: 0px;
+}
+
+.flash {
+    animation: flashAutoHide 1s ease forwards;
+}
+
+.flash {
+    animation-name: flashAutoHide;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.dashboard-header-title {
+    text-align: center;
+}

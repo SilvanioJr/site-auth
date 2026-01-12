@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visão Geral das Escalas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-body admin-page">
+
+<div class="dashboard-container">
+
+    <div class="dashboard-header-title">
+        <h2>Visão Geral das Escalas</h2>
+        <p style="opacity: 0.7; font-size: 13px;">
+            Todas as escalas de todos os usuários <br>
+        </p>
+    </div>
+
+    <div class="card table-wrapper">
+        <table class="escala-table">
+            <thead>
+                <tr>
+                    <th>Usuário</th>
+                    <th>Data</th>
+                    <th>Evento</th>
+                    <th>Tipo</th>
+                    <th>Função</th>
+                    <th>Horário</th>
+                    <th class="acoes-col">Ação</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                {% for r in registros %}
+                <tr>
+                    <td>{{ r.Username }}</td>
+                    <td>{{ r.Data.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ r.Evento }}</td>
+                    <td>{{ r.Tipo }}</td>
+                    <td>{{ r.Funcao }}</td>
+                    <td>{{ r.Horario or '' }}</td>
+                    <td class="acoes-col">
+                        <div class="acoes-wrapper">
+                            <form method="POST" action="/admin/remover-atribuicao" style="display:inline;">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                                <input type="hidden" name="usuario_escala_id" value="{{ r.UsuarioEscalaId }}">
+                                <button class="acao-btn remover" title="Remover"
+                                    onclick="return confirm('Remover este usuário da escala?')">
+                                    🗑️
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/admin/escalas" class="back-link">← Voltar</a>
+
+</div>
+
+</body>
+</html>

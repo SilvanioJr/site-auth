@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="perfil-body">
+
+<div class="perfil-container">
+
+    <h2>Meu perfil</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="login-alert {{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Foto do perfil</label>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <input type="file" name="photo" accept="image/*" required>
+
+        <button type="submit">Salvar foto</button>
+    </form>
+
+    <a href="{{ url_for('dashboard') }}" class="btn-voltar">Voltar</a>
+    
+    
+    <a href="{{ url_for('trocar_senha') }}" class="card senha">
+        <h3>🔐 Trocar senha</h3>
+    </a>
+
+</div>
+
+</body>
+</html>
