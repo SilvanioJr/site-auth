@@ -144,7 +144,7 @@ def security_headers(response):
     response.headers["Referrer-Policy"] = "strict-origin"
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
-        "img-src 'self' data:; "
+        "img-src 'self' https: data:; "
         "style-src 'self' 'unsafe-inline'; "
         f"script-src 'self' 'nonce-{g.csp_nonce}';"
     )
