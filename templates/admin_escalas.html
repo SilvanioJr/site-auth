@@ -28,7 +28,7 @@
     {% endwith %}
 
     <div class="card admin-link-card">
-        <a href="/admin/visao-escalas" class="admin-link">
+        <a href="/admin_visao_escalas" class="admin-link">
             📋 Ver visão geral das escalas
         </a>
     </div>
@@ -80,7 +80,7 @@
             <select name="escala_id" required>
                 <option value="">Selecione</option>
                 {% for e in escalas %}
-                    <option value="{{ e.Id }}">
+                    <option value="{{ e.id }}">
                         {{ e.data.strftime('%d/%m/%Y') }} — {{ e.Evento }}
                     </option>
                 {% endfor %}
