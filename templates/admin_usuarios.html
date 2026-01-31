@@ -54,8 +54,9 @@
 
         <label>Usuário</label>
         <select name="user_id" required>
+            <option value="" selected disabled>Selecione</option>
             {% for user in usuarios %}
-                <option value="{{ user.Id }}">
+                <option value="{{ user.id }}">
                     {{ user.username }}
                 </option>
             {% endfor %}
@@ -86,8 +87,9 @@
 
     <label>Usuário</label>
     <select name="user_id" required>
+        <option value="" selected disabled>Selecione</option>
         {% for user in usuarios %}
-            <option value="{{ user.Id }}">
+            <option value="{{ user.id }}">
                 {{ user.username }}
             </option>
         {% endfor %}
