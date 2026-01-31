@@ -15,15 +15,13 @@
 
         <a href="{{ url_for('perfil') }}" class="user-profile-link">
 
-            <div class="avatar">
-                {% if current_user.photo_path %}
-                    <img src="{{ current_user.photo_path }}?v={{ current_user.id }}"
-                        alt="Foto do usuário"
-                        class="avatar-img">
-                {% else %}
-                    <div class="avatar-placeholder">👤</div>
-                {% endif %}
-            </div>
+            {% if current_user.photo_path %}
+                <img src="{{ current_user.photo_path }}?v={{ current_user.id }}"
+                    alt="Foto do usuário"
+                    class="avatar-img">
+            {% else %}
+                <div class="avatar-placeholder">👤</div>
+            {% endif %}
 
 
             <div class="user-info">
