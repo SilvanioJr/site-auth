@@ -240,7 +240,7 @@ def dashboard():
     )
 
 
-@app.route("/minhas-escalas")
+@app.route("/minhas_escalas")
 @login_required
 def minhas_escalas():
     hoje = datetime.today()
@@ -302,7 +302,7 @@ def logout():
 
 
 
-@app.route("/admin/escalas", methods=["GET", "POST"])
+@app.route("/admin_escalas", methods=["GET", "POST"])
 @login_required
 def admin_escalas():
 
@@ -375,7 +375,7 @@ def admin_escalas():
 
 
 
-@app.route("/admin/visao-escalas")
+@app.route("/admin_visao_escalas")
 @login_required
 def admin_visao_escalas():
 
@@ -477,7 +477,7 @@ def perfil():
 
 
 
-@app.route("/admin/usuarios", methods=["GET", "POST"])
+@app.route("/admin_usuarios", methods=["GET", "POST"])
 @login_required
 def admin_usuarios():
     if not current_user.is_super_admin:
@@ -559,7 +559,7 @@ def admin_usuarios():
     )
 
 
-@app.route("/trocar-senha", methods=["GET", "POST"])
+@app.route("/trocar_senha", methods=["GET", "POST"])
 @login_required
 def trocar_senha():
     if request.method == "POST":
