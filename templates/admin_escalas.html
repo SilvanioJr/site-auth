@@ -81,7 +81,7 @@
                 <option value="">Selecione</option>
                 {% for e in escalas %}
                     <option value="{{ e.Id }}">
-                        {{ e.Data.strftime('%d/%m/%Y') }} — {{ e.Evento }}
+                        {{ e.data.strftime('%d/%m/%Y') }} — {{ e.Evento }}
                     </option>
                 {% endfor %}
             </select>
