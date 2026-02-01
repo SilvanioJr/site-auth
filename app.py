@@ -289,14 +289,12 @@ def minhas_escalas():
     # Ajuste final do Horario para string HH:MM (igual ao CONVERT do SQL Server)
     escalas = []
     for row in result:
-        escalas.append(
-            type(row)(
-                Dia=row.Dia,
-                Funcao=row.Funcao,
-                Horario=row.Horario.strftime("%H:%M") if row.Horario else "",
-                Evento=row.Evento
-            )
-        )
+        escalas.append({
+            "Dia": row.Dia,
+            "Funcao": row.Funcao,
+            "Horario": row.Horario.strftime("%H:%M") if row.Horario else "",
+            "Evento": row.Evento
+            })
 
     return render_template(
         "minhas_escalas.html",
