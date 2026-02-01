@@ -369,6 +369,15 @@ def admin_escalas():
         .all()
     )
 
+    # 🔹 Lista para excluir (últimas 30 escalas)
+    escalas_lista = (
+        Escala.query
+        .order_by(Escala.data.desc(), Escala.horario.desc())
+        .limit(30)
+        .all()
+    )
+
+
     # 🔹 Buscar usuários
     usuarios = (
         User.query
@@ -379,8 +388,39 @@ def admin_escalas():
     return render_template(
         "admin_escalas.html",
         escalas=escalas,
-        usuarios=usuarios
+        usuarios=usuarios,
+        escalas_lista=escalas_lista
     )
+
+
+
+@app.route("/admin_escalas/excluir/<int:escala_id>", methods=["POST"])
+@login_required
+def excluir_escala(escala_id):
+
+    # Segurança: só admin e super admin
+    if not (current_user.is_admin or current_user.is_super_admin):
+        flash("Acesso negado.", "error")
+        return redirect(url_for("dashboard"))
+
+    escala = Escala.query.get_or_404(escala_id)
+
+    try:
+        # Remove vínculos dessa escala
+        UsuarioEscala.query.filter_by(escala_id=escala.id).delete()
+
+        # Remove a escala
+        db.session.delete(escala)
+        db.session.commit()
+
+        flash("Escala excluída com sucesso!", "success")
+
+    except Exception as e:
+        db.session.rollback()
+        flash("Erro ao excluir escala.", "error")
+        print(e)
+
+    return redirect(url_for("admin_escalas"))
 
 
 
@@ -606,7 +646,6 @@ def trocar_senha():
         return redirect(url_for("dashboard"))
 
     return render_template("trocar_senha.html")
-
 
 
 

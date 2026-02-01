@@ -66,6 +66,40 @@
 
     </div>
 
+    
+    <div class="card">
+
+        <h3>Escalas criadas (últimas 30)</h3>
+
+        {% if escalas_lista %}
+            <div class="lista-escalas">
+                {% for e in escalas_lista %}
+                    <div class="linha-escala">
+
+                        <div class="info">
+                            <strong>{{ e.data.strftime('%d/%m/%Y') }}</strong>
+                            — {{ e.evento }}
+                            {% if e.horario %} • {{ e.horario.strftime('%H:%M') }}{% endif %}
+                            • {{ e.tipo }}
+                        </div>
+
+                        <form method="POST"
+                            action="{{ url_for('excluir_escala', escala_id=e.id) }}"
+                            onsubmit="return confirm('Tem certeza que deseja excluir esta escala?');">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn-excluir">🗑 Excluir</button>
+                        </form>
+
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Nenhuma escala encontrada.</p>
+        {% endif %}
+
+    </div>
+
+
     <div class="card">
 
         <h3>Atribuir usuário à escala</h3>
