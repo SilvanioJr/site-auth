@@ -394,27 +394,54 @@ def admin_escalas():
 
 
 
-@app.route("/admin_escalas/excluir/<int:escala_id>", methods=["POST"])
-@login_required
-def excluir_escala(escala_id):
+# @app.route("/admin_escalas/excluir/<int:escala_id>", methods=["POST"])
+# @login_required
+# def excluir_escala(escala_id):
 
-    # Segurança: só admin e super admin
+#     # Segurança: só admin e super admin
+#     if not (current_user.is_admin or current_user.is_super_admin):
+#         flash("Acesso negado.", "error")
+#         return redirect(url_for("dashboard"))
+
+#     escala = Escala.query.get_or_404(escala_id)
+
+#     try:
+#         # Remove vínculos dessa escala
+#         UsuarioEscala.query.filter_by(escala_id=escala.id).delete()
+
+#         # Remove a escala
+#         db.session.delete(escala)
+#         db.session.commit()
+
+#         flash("Escala excluída com sucesso!", "success")
+
+#     except Exception as e:
+#         db.session.rollback()
+#         flash("Erro ao excluir escala.", "error")
+#         print(e)
+
+#     return redirect(url_for("admin_escalas"))
+
+
+@app.route("/admin_escalas/excluir", methods=["POST"])
+@login_required
+def excluir_escala_post():
     if not (current_user.is_admin or current_user.is_super_admin):
         flash("Acesso negado.", "error")
         return redirect(url_for("dashboard"))
 
+    escala_id = request.form.get("escala_id", type=int)
+    if not escala_id:
+        flash("Selecione uma escala.", "error")
+        return redirect(url_for("admin_escalas"))
+
     escala = Escala.query.get_or_404(escala_id)
 
     try:
-        # Remove vínculos dessa escala
         UsuarioEscala.query.filter_by(escala_id=escala.id).delete()
-
-        # Remove a escala
         db.session.delete(escala)
         db.session.commit()
-
         flash("Escala excluída com sucesso!", "success")
-
     except Exception as e:
         db.session.rollback()
         flash("Erro ao excluir escala.", "error")
