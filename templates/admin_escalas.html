@@ -71,7 +71,7 @@
 
         <h3>Excluir escala criada</h3>
 
-        <form method="POST" onsubmit="return confirmarExclusao();">
+        <form method="POST" id="formExcluir" onsubmit="return confirmarExclusao();">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
             <label>Selecione a escala</label>
@@ -87,9 +87,7 @@
                 {% endfor %}
             </select>
 
-            <button type="submit" formaction="{{ url_for('excluir_escala', escala_id=0) }}" id="btnExcluir">
-                🗑 Excluir escala
-            </button>
+            <button type="submit" class="btn-excluir">🗑 Excluir escala</button>
 
         </form>
 
@@ -160,12 +158,13 @@ function confirmarExclusao() {
         return false;
     }
 
-    const btn = document.getElementById("btnExcluir");
-    btn.formAction = "/admin_escalas/excluir/" + escalaId;
+    const form = document.getElementById("formExcluir");
+    form.action = "/admin_escalas/excluir/" + escalaId;
 
     return confirm("Tem certeza que deseja excluir esta escala?");
 }
 </script>
+
 
 
 </body>
