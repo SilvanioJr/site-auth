@@ -6,6 +6,8 @@ import os
 from supabase import create_client
 from io import BytesIO
 from PIL import Image
+from storage3.exceptions import StorageApiError
+
 
 from flask import (
     Flask, render_template, request, redirect,
@@ -535,11 +537,26 @@ def perfil():
             img.save(buf, format="JPEG", quality=85)
             buf.seek(0)
 
-            supabase.storage.from_("avatars").upload(
-                filename,
-                buf.getvalue(),
-                {"content-type": "image/jpeg"}
-            )
+            bucket = supabase.storage.from_("avatars")
+
+            try:
+                bucket.upload(
+                    filename,
+                    buf.getvalue(),
+                    {"content-type": "image/jpeg"}
+                )
+            except StorageApiError as e:
+                # 409 = arquivo já existe → sobrescreve
+                info = e.args[0] if e.args and isinstance(e.args[0], dict) else {}
+                if info.get("statusCode") == 409:
+                    bucket.update(
+                        filename,
+                        buf.getvalue(),
+                        {"content-type": "image/jpeg"}
+                    )
+                else:
+                    raise
+
 
             public_url = supabase.storage.from_("avatars").get_public_url(filename)
 
