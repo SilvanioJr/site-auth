@@ -9,6 +9,7 @@ from PIL import Image
 from storage3.exceptions import StorageApiError
 
 
+
 from flask import (
     Flask, render_template, request, redirect,
     url_for, flash, abort, g
@@ -545,17 +546,23 @@ def perfil():
                     buf.getvalue(),
                     {"content-type": "image/jpeg"}
                 )
+
             except StorageApiError as e:
-                # 409 = arquivo já existe → sobrescreve
+                # e.args[0] costuma ser um dict tipo: {'statusCode': 409, ...}
                 info = e.args[0] if e.args and isinstance(e.args[0], dict) else {}
+
                 if info.get("statusCode") == 409:
-                    bucket.update(
+                    # arquivo já existe -> remove e sobe de novo
+                    bucket.remove([filename])
+
+                    bucket.upload(
                         filename,
                         buf.getvalue(),
                         {"content-type": "image/jpeg"}
                     )
                 else:
                     raise
+
 
 
             public_url = supabase.storage.from_("avatars").get_public_url(filename)
