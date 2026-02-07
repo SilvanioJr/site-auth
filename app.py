@@ -72,6 +72,13 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 # MODELS
 # =========================
 
+class Regiao(db.Model):
+    __tablename__ = "regioes"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), unique=True, nullable=False)
+
+
 class User(db.Model, UserMixin):
     __tablename__ = "users"
 
