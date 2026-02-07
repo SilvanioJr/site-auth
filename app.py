@@ -81,6 +81,7 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, default=False)
     is_super_admin = db.Column(db.Boolean, default=False)
     photo_path = db.Column(db.String(255))
+    role = db.Column(db.String(30), nullable=False, default="user")
 
 
 class Escala(db.Model):
