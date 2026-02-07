@@ -199,15 +199,27 @@ def dashboard():
     dias = list(range(1, total_dias + 1))
 
     # Buscar escalas do mês (equivalente ao SELECT com MONTH / YEAR)
-    registros = (
+    query = (
         Escala.query
         .filter(
             extract("month", Escala.data) == mes,
             extract("year", Escala.data) == ano
         )
+    )
+
+    # 🔹 Se for usuário REGIÃO → só escalas da região dele
+    if current_user.role == "regiao":
+        query = query.filter(Escala.regiao_id == current_user.regiao_id)
+
+    # 🔹 Caso contrário → mantém comportamento atual
+    # (se quiser depois filtrar só globais, a gente ajusta)
+
+    registros = (
+        query
         .order_by(Escala.data, Escala.horario)
         .all()
     )
+
 
     escalas = {}
 
