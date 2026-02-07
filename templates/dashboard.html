@@ -67,17 +67,34 @@
     </div>
 
     <!-- MINHAS ESCALAS -->
-    <a href="/minhas_escalas?mes={{ mes }}&ano={{ ano }}" class="card highlight">
-        <h3>Minhas Escalas</h3>
-        <p>Veja onde você está escalado</p>
-    </a>
+    {% if current_user.role == "regiao" %}
 
-    {% if current_user.is_admin %}
-    <a href="/admin_escalas" class="card highlight">
-        <h3>Administração</h3>
-        <p>Criar e gerenciar escalas</p>
-    </a>
+        <a href="#" class="card highlight">
+            <h3>Escalas Gerais</h3>
+            <p>Ver escalas gerais</p>
+        </a>
+
+        <a href="#" class="card highlight">
+            <h3>Escalas do Departamento</h3>
+            <p>Ver escalas do seu departamento</p>
+        </a>
+
+    {% else %}
+
+        <a href="/minhas_escalas?mes={{ mes }}&ano={{ ano }}" class="card highlight">
+            <h3>Minhas Escalas</h3>
+            <p>Veja onde você está escalado</p>
+        </a>
+
+        {% if current_user.is_admin %}
+        <a href="/admin_escalas" class="card highlight">
+            <h3>Administração</h3>
+            <p>Criar e gerenciar escalas</p>
+        </a>
+        {% endif %}
+
     {% endif %}
+
 
     {% if current_user.is_super_admin %}
         <a href="{{ url_for('admin_usuarios') }}" class="card admin-link-card">
