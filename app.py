@@ -68,19 +68,6 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
-ALLOWED_HOSTS = {
-    "www.midianonaregiao.com.br",
-    "midianonaregiao.com.br",
-}
-
-@app.before_request
-def force_custom_domain():
-    host = request.host.split(":")[0]  # remove porta, se existir
-
-    # Se entrar pela URL do Render (ou qualquer host que não seja o seu domínio), redireciona
-    if host not in ALLOWED_HOSTS:
-        return redirect("https://www.midianonaregiao.com.br" + request.full_path, code=301)
-
 
 
 # =========================
@@ -176,6 +163,21 @@ def security_headers(response):
         f"script-src 'self' 'nonce-{g.csp_nonce}';"
     )
     return response
+
+
+ALLOWED_HOSTS = {
+    "www.midianonaregiao.com.br",
+    "midianonaregiao.com.br",
+}
+
+@app.before_request
+def force_custom_domain():
+    host = request.host.split(":")[0]  # remove porta, se existir
+
+    # Se entrar pela URL do Render (ou qualquer host que não seja o seu domínio), redireciona
+    if host not in ALLOWED_HOSTS:
+        return redirect("https://www.midianonaregiao.com.br" + request.full_path, code=301)
+
 
 
 # =========================
