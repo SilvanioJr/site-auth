@@ -53,7 +53,7 @@
                         class="day has-scale"
                         data-day="{{ dia }}"
                         data-scales='{{ escalas[dia] | tojson }}'
-                    > <br>
+                    >
                         {{ dia }}
                     </span>
                 {% else %}
@@ -161,7 +161,7 @@ document.querySelectorAll(".day.has-scale").forEach(day => {
             ${scales.map(s => `
                 <div class="item">
                     <strong>${s.evento}</strong><br>
-                    <span class="tipo">${s.tipo} • ${s.horario}</span>
+                    <span class="tipo">${s.tipo} • ${s.horario}</span><br>
                 </div>
             `).join("")}
         `;
